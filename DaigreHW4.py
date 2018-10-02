@@ -1,5 +1,5 @@
 # Alex Daigre
-# Aug 27th, 2018
+# Oct 1st, 2018
 # cs4500
 # Version: Python 3.7
 # Description:
@@ -15,6 +15,7 @@
 #   Standard Library Inputs:
 #       Random: Used to generate the random numbers for movements
 #       Enum: used to generate the enum for representing movement
+#       Turtle: used to draw a graphical representation of the board to the screen.
 #   Output Files:
 #       HW3daigreOutfile.txt: This file contains the same output that is printed to 
 #       the screen. Detailed above.
@@ -27,8 +28,12 @@
 #   https://medium.com/programminginpython-com/python-program-to-find-the-largest-and-smallest-number-in-a-list-fd8fac8aba08
 #   https://www.programiz.com/python-programming/methods/built-in/sum
 #   https://stackoverflow.com/questions/10660435/pythonic-way-to-create-a-long-multi-line-string
+#   https://www.blog.pythonlibrary.org/2012/08/06/python-using-turtles-for-drawing/
+#   https://snakify.org/en/lessons/two_dimensional_lists_arrays/
+#   https://docs.python.org/3.0/library/turtle.html
 
 import random
+import turtle
 from enum import Enum
 
 # The loop that is executed durring each turn of the game
@@ -36,6 +41,7 @@ def gameLoop(gameBoard):
     while gameBoard.isComplete() != True:
         newDirection =  rollDie()
         gameBoard.moveDirection(newDirection)
+        drawBoard(gameBoard)
     return gameBoard
 
 # Rolls a die and returns UL, ER, DL, or DR
@@ -93,6 +99,35 @@ def openOutputFileAndWriteContents(outputData):
     fileName = "HW3daigreOutfile.txt"
     with open(fileName, 'w') as outputFile:
             outputFile.write(outputData)
+
+def drawBoard(gameBoard):
+    nodeSize = 10
+    # print("initilising turtle")
+    turtle.tracer(0, 0)
+    myTurtle = turtle.Turtle(shape="turtle")
+    myTurtle.hideturtle()
+
+    # print("turtle initilised")
+
+    rowCounter = 0
+    collumnCounter = 0
+    for row in gameBoard.boardSpaces:
+        # print("got row")
+        for node in row:
+            # print("drawing node")
+            myTurtle.penup()
+            xPosition = (collumnCounter * -(nodeSize*2)) + (((len(row)-1)*(nodeSize*2))/2)
+            yPosition = (rowCounter * -(nodeSize*2)) + (((len(gameBoard.boardSpaces)-1)*(nodeSize*2))/2)
+            # print(f"rowlen:{len(row)} ({xPosition}, {yPosition})")
+            myTurtle.setx(xPosition)
+            myTurtle.sety(yPosition)
+            myTurtle.pendown()
+            myTurtle.circle(nodeSize)
+            collumnCounter += 1
+        collumnCounter = 0
+        rowCounter += 1
+            
+    turtle.update()
 
 #Enum to represent the direction of movement on our board
 class Direction(Enum):
@@ -218,6 +253,7 @@ class GameBoard:
         currentPosition = self.getCurrentPositionAsNumber()
         self.logMoveData(f"{currentPosition}, ")
         return
+
 
 
 # Main code

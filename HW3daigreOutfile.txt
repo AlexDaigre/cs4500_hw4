@@ -1,0 +1,29 @@
+This program simulates a game where the player randomly moves around a triangular game board. The player can move in four directions: up left, up right, down right, down left. Whenever the player moves to a new position on the board the player markes that positon with a dot. The game ends when all positions have been marked. As the program runs, the game prints the current position. When the game completes, the program prints some stats about the game that just concluded.
+
+Total moves: 70
+Average number of dots: 11.833333333333334
+Maximum number of dots: 21Total moves: 49
+Average number of dots: 8.333333333333334
+Maximum number of dots: 15Total moves: 21
+Average number of dots: 3.6666666666666665
+Maximum number of dots: 9Total moves: 45
+Average number of dots: 7.666666666666667
+Maximum number of dots: 20Total moves: 37
+Average number of dots: 6.333333333333333
+Maximum number of dots: 14Total moves: 81
+Average number of dots: 13.666666666666666
+Maximum number of dots: 23Total moves: 60
+Average number of dots: 10.166666666666666
+Maximum number of dots: 19Total moves: 44
+Average number of dots: 7.5
+Maximum number of dots: 14Total moves: 28
+Average number of dots: 4.833333333333333
+Maximum number of dots: 8Total moves: 26
+Average number of dots: 4.5
+Maximum number of dots: 7Stats based on all games played: 
+        Fewest moves in a single game:21 
+        Most moves in a single game:81 
+        Average moves across all games:46.1 
+        Fewest maximum dots in a single game:7 
+        Most maximum dots in a single game:23 
+        Average maximum dots across all games:15.0

@@ -10,7 +10,9 @@
 #   all positions have been marked. As the program runs, the game prints the 
 #   current position. When the game completes, the program prints some stats
 #   about the game that just concluded. When all games have completed, the program 
-#   prints some stats about all the games.
+#   prints some stats about all the games. Now, shows a graphical representation of 
+#   the game. A seperate screen renders the moves, tracking the cursor as a green
+#   outline and displaying dot density with a red heatmap.
 # External Files:
 #   Standard Library Inputs:
 #       Random: Used to generate the random numbers for movements
@@ -101,41 +103,42 @@ def openOutputFileAndWriteContents(outputData):
     with open(fileName, 'w') as outputFile:
             outputFile.write(outputData)
 
+# renders the current gamestate to screen
 def drawBoard(gameBoard):
     nodeSize = 20
-    # print("initilising turtle")
+    # initilising turtle
     turtle.tracer(0, 0)
     myTurtle = turtle.Turtle(shape="turtle")
     myTurtle.hideturtle()
     myTurtle.pensize(nodeSize/6)
 
-    # print("turtle initilised")
-
+    # initialise and start loop to print all nodes
     rowCounter = 0
     collumnCounter = 0
     for row in gameBoard.boardSpaces:
-        # print("got row")
         for node in row:
-            # print("drawing node")
             myTurtle.penup()
+            # Calculate, and move to, the correct centered position for each node
             xPosition = (collumnCounter * -(nodeSize*2)) + (((len(row)-1)*(nodeSize*2))/2)
             yPosition = (rowCounter * -(nodeSize*2)) + (((len(gameBoard.boardSpaces)-1)*(nodeSize*2))/2)
             myTurtle.setx(xPosition)
             myTurtle.sety(yPosition)
             myTurtle.pendown()
+            # Calculate the heatmap color based on number of dots on node
             minColor = 30 if node > 0 else 0
             redDensity = 1 if (minColor+(node*15))/255 >= 1 else (minColor+(node*10))/255
+            # Add an outline if we are on the current node
             if((rowCounter == gameBoard.currentRow) and (collumnCounter == gameBoard.currentCollumn)):
                 myTurtle.color((0,1,0), (redDensity,0,0))
             else:
                 myTurtle.color((0,0,0), (redDensity,0,0))
+            # Draw the node
             myTurtle.begin_fill()
             myTurtle.circle(nodeSize)
             myTurtle.end_fill()
             collumnCounter += 1
         collumnCounter = 0
         rowCounter += 1
-
     turtle.update()
 
 #Enum to represent the direction of movement on our board

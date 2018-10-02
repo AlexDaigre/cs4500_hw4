@@ -31,6 +31,7 @@
 #   https://www.blog.pythonlibrary.org/2012/08/06/python-using-turtles-for-drawing/
 #   https://snakify.org/en/lessons/two_dimensional_lists_arrays/
 #   https://docs.python.org/3.0/library/turtle.html
+#   http://book.pythontips.com/en/latest/ternary_operators.html
 
 import random
 import turtle
@@ -101,11 +102,12 @@ def openOutputFileAndWriteContents(outputData):
             outputFile.write(outputData)
 
 def drawBoard(gameBoard):
-    nodeSize = 10
+    nodeSize = 20
     # print("initilising turtle")
     turtle.tracer(0, 0)
     myTurtle = turtle.Turtle(shape="turtle")
     myTurtle.hideturtle()
+    myTurtle.pensize(nodeSize/6)
 
     # print("turtle initilised")
 
@@ -118,15 +120,22 @@ def drawBoard(gameBoard):
             myTurtle.penup()
             xPosition = (collumnCounter * -(nodeSize*2)) + (((len(row)-1)*(nodeSize*2))/2)
             yPosition = (rowCounter * -(nodeSize*2)) + (((len(gameBoard.boardSpaces)-1)*(nodeSize*2))/2)
-            # print(f"rowlen:{len(row)} ({xPosition}, {yPosition})")
             myTurtle.setx(xPosition)
             myTurtle.sety(yPosition)
             myTurtle.pendown()
+            minColor = 30 if node > 0 else 0
+            redDensity = 1 if (minColor+(node*15))/255 >= 1 else (minColor+(node*10))/255
+            if((rowCounter == gameBoard.currentRow) and (collumnCounter == gameBoard.currentCollumn)):
+                myTurtle.color((0,1,0), (redDensity,0,0))
+            else:
+                myTurtle.color((0,0,0), (redDensity,0,0))
+            myTurtle.begin_fill()
             myTurtle.circle(nodeSize)
+            myTurtle.end_fill()
             collumnCounter += 1
         collumnCounter = 0
         rowCounter += 1
-            
+
     turtle.update()
 
 #Enum to represent the direction of movement on our board
